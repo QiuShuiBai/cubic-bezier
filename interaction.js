@@ -176,13 +176,16 @@ bezierLibrary.curves = JSON.parse(localStorage.curves);
 
 bezierLibrary.render();
 
-if(location.hash) {
-	bezierCanvas.bezier = window.bezier = new CubicBezier(decodeURI(location.hash));
+function updateBezier(str) {
+	bezierCanvas.bezier = window.bezier = new CubicBezier(decodeURI(str));
 	
 	var offsets = bezierCanvas.offsets;
 	
 	P1.style.prop(offsets[0]);
 	P2.style.prop(offsets[1]);
+}
+if(location.hash) {
+	updateBezier(location.hash)
 }
 
 favicon.width = favicon.height = 16 * pixelDepth;

@@ -329,6 +329,9 @@ header {
 #P2x, #P2y {
 	color: #0ab;
 }
+#P1x, #P1y, #P2x, #P2y {
+	padding: 0 4px;
+}
 
 canvas#curve {
 	background: #f0f0f0;
