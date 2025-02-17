@@ -1,67 +1,42 @@
 (function() {
-  var editables = $$('.param');
-  function onInput(editable) {
-    var sel = window.getSelection();
-    var range = sel.getRangeAt(0);
-    var startOffset = range.startOffset;
-  
-    var content = editable.innerText;
-    var isNegative = content[0] === '-';
-    if (isNegative) {
-      content = content.slice(1);
-    }
-    if (/[^0-9.]/g.test(content)) {
-      content = content.replace(/[^0-9.]/g, '');
-      startOffset = startOffset - 1;
-    }
-    content = isNegative ? '-' + content : content;
-  
-    // only one decimal point
-    var parts = content.split('.');
-    if (parts.length > 2) {
-      content = parts[0] + '.' + parts.slice(1).join('');
-      startOffset = startOffset - 1;
-    }
-    content.replace(/<br\s*\/?>/gi, ''); 
-  
-    editable.innerText = content;
-  
-    if (editable.firstChild) {
-      range.setStart(editable.firstChild, Math.min(startOffset, content.length));
-      range.setEnd(editable.firstChild, Math.min(startOffset, content.length));
-      sel.removeAllRanges();
-      sel.addRange(range);
-    }
+  var inputList = $$('.param');
+  var hiddenTextList = $$('.hidden-text');
+  function onInput(input, index) {
+    hiddenTextList[index].innerHTML = input.value || 0;
   }
-  
-  function onKeydown(event, editable, i) {
-    if (event.key === 'Enter') {
+  function onKeydown(event, input) {
+    if (event.key === '-' && input.value[0] === '-') {
       event.preventDefault();
-      if (['.', '-'].includes(editable.innerText)) return;
-      editable.blur();
+    } else if (event.key === 'Enter') {
+      event.preventDefault();
+      input.blur();
     }
   }
   
-  function onBlur(editable, index) {
-    var xy = editable.innerText;
+  function onBlur(input, index) {
+    var xy = input.value;
     if (isNaN(xy) || (!(index % 2) && (xy < 0 || xy > 1))) {
-      editable.innerText = 0;
+      input.value = 0;
     }
-
-    updateBezier(editable.parentElement.innerText);
+    let text = [...inputList].reduce(function(_text, item) {
+      _text += item.value + ','
+      return _text;
+    }, '')
+    text = text.slice(0, -1)
+    updateBezier(text);
     update();
     updateDelayed();
   }
   
-  editables.forEach(function(editable, index) {
-    editable.addEventListener('input', function() {
-      onInput(editable, index);
+  inputList.forEach(function(input, index) {
+    input.addEventListener('keydown', function(event) {
+      onKeydown(event, input);
     });
-    editable.addEventListener('keydown', function(event) {
-      onKeydown(event, editable, index);
+    input.addEventListener('input', function(event) {
+      onInput(input, index);
     });
-    editable.addEventListener('blur', function() {
-      onBlur(editable, index);
+    input.addEventListener('blur', function() {
+      onBlur(input, index);
     });
   });
 })()

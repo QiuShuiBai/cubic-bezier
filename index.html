@@ -12,11 +12,33 @@
 
 <header>
 	<h1>
-		<a href="" class="permalink"><code>cubic-bezier(<span id="values"><span
-		 id="P1x" class="param" contenteditable="true">0</span>,<span
-		 id="P1y" class="param" contenteditable="true">0</span>,<span
-		 id="P2x" class="param" contenteditable="true">.25</span>,<span
-		 id="P2y" class="param" contenteditable="true">1</span></span>)</code></a>
+		<a href="" class="permalink">
+			<code>
+				<span>cubic-bezier(</span>
+				<div id="values">
+					<div class="input-wrapper">
+						<span class="hidden-text" aria-hidden="true"></span>
+						<input class="param" id="P1x" type="number" inputmode="decimal">
+					</div>
+					<span>,</span>
+					<div class="input-wrapper">
+						<span class="hidden-text" aria-hidden="true"></span>
+						<input class="param" id="P1y" type="number" inputmode="decimal">
+					</div>
+					<span>,</span>
+					<div class="input-wrapper">
+						<span class="hidden-text" aria-hidden="true"></span>
+						<input class="param" id="P2x" type="number" inputmode="decimal">
+					</div>
+					<span>,</span>
+					<div class="input-wrapper">
+						<span class="hidden-text" aria-hidden="true"></span>
+						<input class="param" id="P2y" type="number" inputmode="decimal">
+					</div>
+				</div>
+				<span>)</span>
+			</code>
+		</a>
 		<div id="copybuttons">
 			<button id="copy">Copy</button>
 			<button id="copyoptionstoggle">&#9662;</button>

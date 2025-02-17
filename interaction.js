@@ -430,11 +430,13 @@ function update() {
 
 
 	updateCopyInputs();
-	var params = $$('.param', bezierCode), 
+	var params = $$('.param'), 
+		hiddenTextList = $$('.hidden-text'),
 		prettyOffsets = bezier.coordinates.toString().split(',');
-	
-	for(var i=params.length; i--;) {
-		params[i].textContent = prettyOffsets[i]; 
+
+	for (var i=params.length; i--;) {
+		hiddenTextList[i].innerHTML = prettyOffsets[i];
+		params[i].value = prettyOffsets[i]; 
 	}
 }
 function updateCopyInputs(){
